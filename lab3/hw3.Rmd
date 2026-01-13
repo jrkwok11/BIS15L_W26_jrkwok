@@ -13,7 +13,7 @@ Answer the following questions and/or complete the exercises in RMarkdown. Pleas
 ## Load the tidyverse
 ```{r}
 library("tidyverse")
-```
+``` 
 
 In order to answer the questions below, you will need to do a little online research.
 
