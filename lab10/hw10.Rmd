@@ -1,6 +1,6 @@
 ---
 title: "Homework 10"
-author: "Key"
+author: "Joanna K"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -34,17 +34,42 @@ sharks <-
 ## Questions
 1. Are there any "hotspots" for shark incidents in California? Show the top five counties with the most incidents.
 ```{r}
-
+sharks %>% 
+  select(incident_num, county) %>% 
+  group_by(county) %>% 
+  summarise(county_inc= sum(incident_num, na.rm = T)) %>% 
+  arrange(desc(county_inc)) %>% 
+  slice_head(n=5)
 ```
 
 2.  Make a plot that shows the total number of incidents per county.
 ```{r}
-
+sharks %>% 
+  select(incident_num, county) %>% 
+  group_by(county) %>% 
+  summarise(county_inc= sum(incident_num, na.rm = T)) %>% 
+  ggplot(aes(x=county, y=county_inc))+
+  geom_col()+
+  coord_flip()+
+  labs(title = "number of incidents per county", x="number of incidents", y="county")
+  
 ```
 
-3. Are there months of the year when incidents are more likely to occur? Make a plot that shows the total number of incidents by month. Which month has the highest number of incidents?  
+3. Are there months of the year when incidents are more likely to occur? Make a plot that shows the total number of incidents by month. Which month has the highest number of incidents?
 ```{r}
+sharks_month <- sharks %>% 
+  select(month, incident_num) %>% 
+  mutate(month_name= month(month, label = T, abbr = F))
+```
 
+```{r}
+sharks_month %>% 
+  group_by(month_name) %>% 
+  summarise(month_inc= sum(incident_num, na.rm = T)) %>% 
+  ggplot(aes(x=month_name, y= month_inc))+
+  geom_col()+
+  coord_flip()+
+  labs(title = "number of incidents per month", x="number of incidents", y="month")
 ```
 
 ```{r}
@@ -53,37 +78,74 @@ sharks <-
 
 4. Is there a time of day when most attacks occur? Make a plot that shows the total number of incidents by time of day. Which time of day has the highest number of incidents?  
 ```{r}
-
+sharks %>% 
+  select(time, incident_num) %>% 
+  filter(!is.na(time)) %>% 
+  group_by(time) %>% 
+  summarise(inc_time= sum(incident_num, na.rm = T)) %>% 
+  ggplot(aes(x=time, y=inc_time)) +
+  geom_col()+
+  coord_flip()+
+  labs(title = "number of incidents by time of day", x="number of incidents", y="time")
 ```
 
 5. How do the number and types of injuries compare by county? Make a table that shows the number of injury types by county. Which county has the highest number incidents? (hint: your table should be in wide format)
 ```{r}
-
+sharks %>% 
+  select(injury, county, incident_num) %>% 
+  group_by(county) %>% 
+  count(injury) %>% 
+  pivot_wider(names_from = "injury",
+              values_from = "n")
 ```
 
 6. Use the table from #5 to make a plot that shows the total number of incidents by county.
 ```{r}
-
+sharks %>% 
+  select(injury, county, incident_num) %>% 
+  ggplot(aes(x=county))+
+  geom_bar(aes(fill = injury))+
+  coord_flip()+
+  labs(title = "number of incidents per county", x= "county", y="number of incidents")
 ```
 
 7. In the data, `mode` refers to a type of activity. Which activity is associated with the highest number of incidents?
 ```{r}
-
+sharks %>% 
+  select(mode, incident_num) %>% 
+  group_by(mode) %>% 
+  summarise(mode_inc= sum(incident_num, na.rm=T)) %>% 
+  arrange(desc(mode_inc))
 ```
 
 8. Make a plot that compares the number of incidents by activity.
 ```{r}
-
+sharks %>% 
+  select(mode, incident_num) %>% 
+  count(mode, sort = T) %>% 
+  ggplot(aes(x = mode, y=n))+
+  geom_col(aes(fill = mode))+
+  labs(title = "Number of incidents per activity mode", x="activity mode", y="number of incidents")+
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
 ```
 
 9. Which shark species is involved in the highest number of incidents?  
 ```{r}
-
+sharks %>% 
+  select(incident_num, species) %>% 
+  group_by(species) %>% 
+  summarise(species_inc= sum(incident_num, na.rm=T)) %>% 
+  arrange(desc(species_inc)) %>% 
+  slice_head()
 ```
 
 10. Are all incidents involving Great White's fatal? Make a plot that shows the number and types of incidents for Great White's only.  
 ```{r}
-
+sharks %>% 
+  filter(species=="White") %>% 
+  ggplot(aes(x=injury))+
+  geom_bar(aes(fill = injury))+
+  labs(title = "number of incidents and type of injury by Great White sharks", x="injury type", y="number of incidents")
 ```
 
 ## Knit and Upload
