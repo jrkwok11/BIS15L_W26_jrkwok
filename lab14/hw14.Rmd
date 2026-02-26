@@ -96,7 +96,7 @@ lat_min <- 32.855
 lat_max <- 39.57833
 ```
 
-```{r}
+```{r, eval=F, echo=T}
 leaflet(sharks_fatal) %>% 
   addProviderTiles(providers$Stadia.StamenTerrain) %>% 
   addCircleMarkers(
@@ -125,7 +125,8 @@ shark_sd <- sharks %>%
   filter(county == "San Diego")
 shark_sd
 ```
-```{r}
+
+```{r, eval=F, echo=T}
 leaflet(shark_sd) %>% 
   addProviderTiles(providers$Stadia.StamenTerrain) %>% 
   addCircleMarkers(
