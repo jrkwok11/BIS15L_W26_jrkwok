@@ -62,7 +62,7 @@ The data are from: Rode, K.D., Wilson, R.R., Douglas, D.C., Muhlenbruch, V., Atw
 Run the code chunk below to load the data, clean the names, and do some tidying.
 ```{r message=FALSE, warning=FALSE}
 polar_bears <- 
-  read_csv("data/polarBear_serumUreaCreatinine_beaufortChukchi_rode.csv") %>% 
+  read_csv("data/polarBear_serumUreaCreatinine_beaufortChukchi_rode.csv", na="unknown") %>% 
   clean_names() %>% 
   select(-den_method, -no_cubs, -cub_age) %>%
   filter(age_class==c("A", "S")) %>% 
@@ -76,16 +76,15 @@ polar_bears <-
 ```{r}
 names(polar_bears)
 summary(polar_bears)
+miss_var_summary(polar_bears)
 ```
 
 
 2. (3 points) How are NA's represented and where are they distributed in the variables? Use the `naniar` package to visualize the distribution of NA's in the data and replace any alternative representations of NA with actual NA values.
 
-There are no NA's represented in the data. 
 
 ```{r}
-polar_bears %>% 
-  mutate(across(where(is.numeric), ~na_if(., -999)))
+#In .csv code chunk
 ```
 
 
@@ -100,11 +99,11 @@ polar_bears %>%
 
 ```{r}
 polar_bears %>% 
-  select(sex) %>% 
-  group_by(sex) %>% 
+  select(sex, popn) %>% 
+  group_by(sex, popn) %>% 
   summarise(count=n()) %>% 
-  ggplot(aes(fill=sex, x= sex, y=count))+
-  geom_col()+
+  ggplot(aes(fill=sex, x= popn, y=count))+
+  geom_col(position = "dodge")+
   labs(title = "Number of Polar Bears by Sex", x= "Sex", y="Number of Polar Bears", fill ="Sex")
 ```
 
