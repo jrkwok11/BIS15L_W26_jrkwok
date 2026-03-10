@@ -114,12 +114,11 @@ goi_blastn_hit <- readAAStringSet("C:/Users/jk_ic/OneDrive/Desktop/BIS15L_W26_jr
 
 **9. From the same organism, identify 5 other annotated genes? Do these genes suggest about the biology or virulence of this bacterium?** *Annotated genes can be found in the "CDS" section of the GenBank file. You can also find genes by going to summary page for the organism and looking at the "View annotated genes" section.*
 
-what?
-
+couldnt find
 
 **10. Now that you have an idea of this bacteria's identity, what illness/disease do you think the patient has? What is the historical or public health significance of this disease? Based on the gene you identified, what role might this gene play in pathogenicity?**
 
-lowk idk
+I think the disease is the Black Plague. This was one of deadliest pandemics, shaping how we deal with pandemics today. The role the gene plays is crucial for the bacteria to survive in the host as well as become even more effective as a pathogen.
 
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean! 
