@@ -106,7 +106,7 @@ polar_bears %>%
   geom_col(position = "dodge")+
   labs(title = "Number of Polar Bears by Sex", x= "Sex", y="Number of Polar Bears", fill ="Sex")
 ```
-
+Sex sampling is not equal 
 
 4. (6 points) How many bears were sampled in each year for both populations? Make a line plot(s) to visualize sampling by year for both populations. (hint: you will need to pull apart the date to get the year in its own column)
 
@@ -119,8 +119,9 @@ polar_bears <- polar_bears %>%
 polar_bears%>% 
   group_by(year, popn) %>% 
   summarise(count= n()) %>% 
-  ggplot(aes(x=year, y=count, color= popn))+
+  ggplot(aes(x=year, y=count, color= popn, group = popn))+
   geom_point()+
+  geom_line()+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   labs(title = "Number of Bears Sampled by Year for Each Population", x= "Year", y="Number of Bears", color = "Population")
 ```
@@ -172,8 +173,9 @@ polar_bears%>%
   filter(fasting == "fasting") %>% 
   group_by(year, popn) %>% 
   summarise(count= n()) %>% 
-  ggplot(aes(x=year, y=count, color= popn))+
+  ggplot(aes(x=year, y=count, color= popn, group = popn))+
   geom_point()+
+  geom_line()+
   theme(axis.text.x = element_text(angle = 60, hjust = 1))+
   labs(title = "Number of Bears Fasting by Year for Each Population", x= "Year", y="Number of Bears Fasting", color = "Population")
 ```
